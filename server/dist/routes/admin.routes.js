@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.adminRouter = void 0;
+const express_1 = require("express");
+const admin_controller_js_1 = require("../controllers/admin.controller.js");
+const auth_js_1 = require("../middlewares/auth.js");
+const rbac_js_1 = require("../middlewares/rbac.js");
+exports.adminRouter = (0, express_1.Router)();
+exports.adminRouter.use(auth_js_1.requireAuth);
+exports.adminRouter.use((0, rbac_js_1.requireRole)(['District Officer', 'Admin']));
+exports.adminRouter.get('/analytics', admin_controller_js_1.AdminController.getAnalytics);
+exports.adminRouter.post('/applications/:id/review', admin_controller_js_1.AdminController.approveApplication);

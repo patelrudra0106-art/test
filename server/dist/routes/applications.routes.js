@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.applicationsRouter = void 0;
+const express_1 = require("express");
+const applications_controller_js_1 = require("../controllers/applications.controller.js");
+const auth_js_1 = require("../middlewares/auth.js");
+const validate_js_1 = require("../middlewares/validate.js");
+const applications_schema_js_1 = require("../schemas/applications.schema.js");
+exports.applicationsRouter = (0, express_1.Router)();
+exports.applicationsRouter.post('/', auth_js_1.requireAuth, (0, validate_js_1.validate)(applications_schema_js_1.createApplicationSchema), applications_controller_js_1.ApplicationsController.create);
+exports.applicationsRouter.get('/my', auth_js_1.requireAuth, applications_controller_js_1.ApplicationsController.getMyApplications);
+exports.applicationsRouter.get('/:id', auth_js_1.requireAuth, applications_controller_js_1.ApplicationsController.getById);

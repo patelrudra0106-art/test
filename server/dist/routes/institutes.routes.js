@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.institutesRouter = void 0;
+const express_1 = require("express");
+const institutes_controller_js_1 = require("../controllers/institutes.controller.js");
+const auth_js_1 = require("../middlewares/auth.js");
+const rbac_js_1 = require("../middlewares/rbac.js");
+exports.institutesRouter = (0, express_1.Router)();
+exports.institutesRouter.use(auth_js_1.requireAuth);
+exports.institutesRouter.use((0, rbac_js_1.requireRole)(['Institute', 'District Officer', 'Admin']));
+exports.institutesRouter.get('/applications/pending', institutes_controller_js_1.InstitutesController.getPendingApplications);
+exports.institutesRouter.post('/applications/:id/verify', institutes_controller_js_1.InstitutesController.verifyApplication);
