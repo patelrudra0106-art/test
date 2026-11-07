@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/policies/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

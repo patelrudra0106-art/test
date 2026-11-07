@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-forest-green: #24523F;
+    --color-sage-green: #E5EBDD;
+    --color-vanilla-cream: #F6F1E7;
+    --color-saffron: #FA9231;
+    --color-charcoal: #302F28;
+    --color-warm-ivory: #FFFCF7;
+    --color-muted-text: #57564F;
+    --color-warm-border: #DCD2C1;
+  }
+
+  html {
+    font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-vanilla-cream);
+    color: var(--color-charcoal);
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Language-aware typography rule for Gujarati content */
+  :lang(gu),
+  .font-gujarati {
+    font-family: 'Anek Gujarati', 'Manrope', system-ui, sans-serif;
+    line-height: 1.65;
+    letter-spacing: 0;
+  }
+
+  /* Accessible keyboard focus ring across interactive controls */
+  :focus-visible {
+    outline: 2px solid var(--color-forest-green);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Visual balance: ~70% existing flat UI, ~20% soft Neumorphism on selected cards/controls,
+     and ~10% Liquid Glass concentrated in the shared navbar. This is a visual guideline,
+     not a literal component count. */
+  /* SHARED DESKTOP + ANDROID NAVBAR — only slightly more transparent than before.
+     Keep the warm surface readable; do not make the navbar highly transparent. */
+  .glass-navbar {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255, 252, 247, 0.08) 0%,
+        rgba(255, 252, 247, 0.025) 45%,
+        rgba(229, 222, 208, 0.07) 100%
+      ),
+      linear-gradient(
+        135deg,
+        rgba(229, 222, 208, 0.87) 0%,
+        rgba(241, 235, 223, 0.84) 54%,
+        rgba(235, 229, 216, 0.86) 100%
+      );
+    -webkit-backdrop-filter: blur(30px) saturate(1.2);
+    backdrop-filter: blur(30px) saturate(1.2);
+    border: 1px solid rgba(190, 178, 157, 0.56);
+    box-shadow:
+      0 12px 32px -12px rgba(48, 47, 40, 0.17),
+      0 3px 10px -4px rgba(48, 47, 40, 0.08),
+      inset 0 1px 0 rgba(255, 252, 247, 0.9),
+      inset 0 -1px 0 rgba(220, 210, 193, 0.32);
+    background-clip: padding-box;
+    isolation: isolate;
+  }
+
+  @supports not ((backdrop-filter: blur(1px))) {
+    .glass-navbar {
+      background: rgba(238, 232, 220, 0.95);
+    }
+  }
+
+  /* STYLE A — SOFT FROSTED GLASS */
+  .glass-style-a {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 252, 247, 0.88) 0%,
+      rgba(246, 241, 231, 0.84) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(220, 210, 193, 0.85);
+    @apply shadow-glass;
+  }
+
+  /* STYLE B — CLEAN UTILITY SURFACES */
+  .glass-style-b {
+    background-color: rgba(255, 252, 247, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-warm-border);
+    @apply shadow-card transition-all duration-fast ease-smooth;
+    /* Soft inset depth for selected utility controls, without changing their layout. */
+    box-shadow:
+      inset 2px 2px 5px rgba(48, 47, 40, 0.045),
+      inset -2px -2px 6px rgba(255, 252, 247, 0.78),
+      0 1px 2px rgba(48, 47, 40, 0.025);
+  }
+
+  /* STYLE C — LAYERED FLOATING GLASS */
+  .glass-style-c {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 252, 247, 0.92) 0%,
+      rgba(246, 241, 231, 0.87) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(220, 210, 193, 0.9);
+    @apply shadow-glass transition-all duration-normal ease-smooth;
+  }
+
+  /* STYLE D — INTERACTIVE GLASS */
+  .glass-style-d {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 252, 247, 0.93) 0%,
+      rgba(229, 235, 221, 0.65) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(220, 210, 193, 0.95);
+    @apply shadow-glass transition-all duration-fast ease-smooth;
+  }
+
+  .glass-style-d:hover {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 252, 247, 0.98) 0%,
+      rgba(229, 235, 221, 0.85) 100%
+    );
+    @apply shadow-glass-hover;
+  }
+
+  /* Notification Toast Surface */
+  .glass-notification {
+    background: linear-gradient(
+      135deg,
+      rgba(246, 241, 231, 0.94) 0%,
+      rgba(229, 235, 221, 0.9) 100%
+    );
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--color-warm-border);
+    @apply shadow-glass;
+  }
+
+  /* REUSABLE BUTTON TREATMENTS */
+  .btn-primary {
+    @apply bg-forest-green text-warm-ivory border border-forest-green shadow-sm transition-all duration-fast ease-smooth;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background-color: #1c4232;
+    @apply shadow-glass-hover -translate-y-0.5;
+  }
+
+  .btn-primary:active:not(:disabled) {
+    @apply translate-y-0 shadow-glass-pressed;
+  }
+
+  .btn-secondary {
+    @apply bg-warm-ivory text-forest-green border border-forest-green/80 shadow-sm transition-all duration-fast ease-smooth;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    @apply bg-sage-green/70 border-forest-green shadow-card-hover -translate-y-0.5;
+  }
+
+  .btn-secondary:active:not(:disabled) {
+    @apply translate-y-0 shadow-glass-pressed;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-charcoal hover:bg-sage-green/60 transition-all duration-fast ease-smooth;
+  }
+
+  /* REUSABLE CARD & SKELETON SHIMMER TREATMENTS */
+  .scheme-card-surface {
+    background-color: var(--color-warm-ivory);
+    border: 1px solid var(--color-warm-border);
+    @apply rounded-glass shadow-card transition-all duration-normal ease-smooth;
+    /* Restrained raised Neumorphism: warm highlights with a shallow charcoal shadow. */
+    box-shadow:
+      4px 4px 10px rgba(48, 47, 40, 0.055),
+      -4px -4px 10px rgba(255, 252, 247, 0.72),
+      inset 0 1px 0 rgba(255, 252, 247, 0.82);
+  }
+
+  .scheme-card-surface:hover {
+    border-color: rgba(36, 82, 63, 0.35);
+    @apply shadow-card-hover -translate-y-1;
+  }
+
+  @keyframes shimmerPulse {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(220, 210, 193, 0.35) 25%,
+      rgba(229, 235, 221, 0.65) 50%,
+      rgba(220, 210, 193, 0.35) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmerPulse 1.8s infinite ease-in-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skeleton-shimmer {
+    animation: none !important;
+    background: rgba(220, 210, 193, 0.45);
+  }
+}
+
+/* Responsive utilities required by the approved Android layout. */
+@layer components {
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Keep horizontal clipping from forming a scroll container that can break sticky headers. */
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-shimmer {
+    animation: none !important;
+    background: rgba(220, 210, 193, 0.45);
+  }
+}
